@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Rule Finder</title>
+		<style>
+			:root { color-scheme: dark; }
+			body {
+				margin: 0;
+				font: 14px/1.5 system-ui, sans-serif;
+				background: #0b0d10;
+				color: #e6e8eb;
+				padding: 20px;
+			}
+			h1 { font-size: 16px; margin: 0 0 12px; }
+			input {
+				width: 100%; box-sizing: border-box; padding: 9px 12px; margin-bottom: 14px;
+				background: #14171c; border: 1px solid #232a31; border-radius: 8px; color: #e6e8eb;
+			}
+			.count { font-size: 11px; color: #8a939c; margin-bottom: 8px; }
+			ul { list-style: none; margin: 0; padding: 0; }
+			li { padding: 9px 0; border-bottom: 1px solid #1b2127; }
+			.id { font-family: ui-monospace, monospace; color: #93c5fd; }
+			.pill { font-size: 10px; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+			.deny { background: #4c1d1d; color: #fca5a5; }
+			.allow { background: #064e3b; color: #6ee7b7; }
+			.ask { background: #422006; color: #fcd34d; }
+			.msg { color: #cbd5e1; font-size: 13px; margin-top: 2px; }
+			.muted { color: #8a939c; }
+		</style>
+	</head>
+	<body>
+		<h1>Rule Finder</h1>
+		<input id="q" placeholder="Search rules by id, message, decision…" autocomplete="off" />
+		<div class="count" id="count"></div>
+		<ul id="list"><li class="muted">loading…</li></ul>
+
+		<script type="module">
+			// Reference plugin — see @sigmashake/plugin-sdk for the typed version.
+			const cfg = window.__SSG_PLUGIN_CONFIG__ || {};
+			async function api(path) {
+				const r = await fetch(path, {
+					headers: { Accept: "application/json", "X-SigmaShake-Token": cfg.token || "" },
+				});
+				if (!r.ok) throw new Error("HTTP " + r.status);
+				return r.json();
+			}
+			let rules = [];
+			const list = document.getElementById("list");
+			const count = document.getElementById("count");
+			const q = document.getElementById("q");
+
+			function decClass(d) {
+				d = String(d || "").toLowerCase();
+				if (d.includes("den") || d.includes("block")) return "deny";
+				if (d.includes("ask")) return "ask";
+				return "allow";
+			}
+			function render() {
+				const term = q.value.trim().toLowerCase();
+				const shown = rules.filter((r) =>
+					!term ||
+					JSON.stringify(r).toLowerCase().includes(term),
+				);
+				count.textContent = shown.length + " of " + rules.length + " rules";
+				list.innerHTML = "";
+				if (shown.length === 0) {
+					list.innerHTML = '<li class="muted">no matches</li>';
+					return;
+				}
+				for (const r of shown.slice(0, 200)) {
+					const id = r.id || r.rule_id || "(unnamed)";
+					const dec = r.decision || r.action || "";
+					const msg = r.message || r.description || "";
+					const li = document.createElement("li");
+					li.innerHTML =
+						'<span class="id">' + String(id) + "</span>" +
+						(dec ? '<span class="pill ' + decClass(dec) + '">' + dec + "</span>" : "") +
+						(msg ? '<div class="msg">' + String(msg) + "</div>" : "");
+					list.appendChild(li);
+				}
+			}
+			q.addEventListener("input", render);
+
+			(async () => {
+				try {
+					const data = await api("/api/json/rules");
+					rules = Array.isArray(data) ? data : data.rules || [];
+					render();
+				} catch (e) {
+					list.innerHTML = '<li class="muted">could not load rules: ' + e.message + "</li>";
+				}
+			})();
+		</script>
+	</body>
+</html>

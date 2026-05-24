@@ -1,0 +1,14 @@
+# rule-finder — searchable browser over your installed governance rules.
+id              = "rule-finder"
+version         = "0.1.0"
+name            = "Rule Finder"
+description     = "Fast searchable browser over your installed governance rules."
+category        = "developer"
+entry           = "index.html"
+min_ssg_version = "0.29.94"
+
+[[nav]]
+label   = "Rule Finder"
+path    = "/plugins/rule-finder/"
+section = "tools"
+order   = 50

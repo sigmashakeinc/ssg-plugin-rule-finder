@@ -1,0 +1,20 @@
+{
+  "id": "rule-finder",
+  "version": "0.1.0",
+  "name": "Rule Finder",
+  "description": "Fast searchable browser over your installed governance rules.",
+  "entry": "index.html",
+  "artifact_url": "__FILL_ME_IN__",
+  "artifact_sha256": "80a98e8b49c1337c7b015638c88efe91b7dff0a2843c2ccddc58660bd486d49b",
+  "artifact_signature": "8730d96a9d41f2a7105067b525dafc92a86ac5b929a11d6ab6518f5bcbfc02e3f273f9da65cf9cfc8fda9cf91973058c20e7ab6d4a8c1742359119901c505f0a",
+  "signing_fingerprint": "302a300506032b6570032100fa27b2eba3b238546c2c6bb48358f6e376cf31c80ab23d4215cacfabfc6dbd55",
+  "min_ssg_version": "0.29.94",
+  "nav": [
+    {
+      "label": "Rule Finder",
+      "path": "/plugins/rule-finder/",
+      "section": "tools",
+      "order": 50
+    }
+  ]
+}
