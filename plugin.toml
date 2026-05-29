@@ -1,6 +1,6 @@
 # rule-finder — searchable browser over your installed governance rules.
 id              = "rule-finder"
-version         = "0.1.0"
+version         = "0.1.1"
 name            = "Rule Finder"
 description     = "Fast searchable browser over your installed governance rules."
 category        = "developer"
