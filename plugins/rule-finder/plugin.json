@@ -1,0 +1,20 @@
+{
+  "id": "rule-finder",
+  "version": "0.1.2",
+  "name": "Rule Finder",
+  "description": "Fast searchable browser over your installed governance rules.",
+  "entry": "index.html",
+  "artifact_url": "https://github.com/sigmashakeinc/ssg-plugin-rule-finder/releases/download/rule-finder-v0.1.2/rule-finder-v0.1.2.tar.gz",
+  "artifact_sha256": "d376687001e6c481adc2c0a1adb653483b87eb2193605c64d6fd8370043d6743",
+  "artifact_signature": "c1b3104c3363499a1bb8b3ddc56ba7402b1d911daaa451899321ef951b7f602a6a92bca8ee29df034f7865ff4e7aedf344bcdbe4ed1fafca21c3116945e9a502",
+  "signing_fingerprint": "302a300506032b657003210078fd845619e68fb2b27f30aed0a75381e948922e9af56273e53d79351a2d5818",
+  "min_ssg_version": "0.29.94",
+  "nav": [
+    {
+      "label": "Rule Finder",
+      "path": "/plugins/rule-finder/",
+      "section": "tools",
+      "order": 50
+    }
+  ]
+}
